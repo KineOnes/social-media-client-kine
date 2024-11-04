@@ -1,14 +1,21 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
 
+
+/** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    files: ["**/*.js"],
-    languageOptions: {
-      sourceType: "module", // Enables ES module syntax (import/export)
-      ecmaVersion: 2020, // Sets ECMAScript version to 2020 for modern features
-      globals: globals.browser, // Adds browser globals (like window, document, etc.)
-    },
+    languageOptions: { globals: globals.browser },
+    extends: "eslint:recommended",
+    overrides: [
+      {
+        files: ["**/*.test.js"],
+        env: { jest: true },
+        plugins: ["jest"],
+        extends: ["plugin:jest/recommended"],
+        rules: { "jest/prefer-expect-assertions": "off" }
+      }
+    ],
   },
   pluginJs.configs.recommended,
 ];
