@@ -1,57 +1,49 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
-import jestPlugin from "eslint-plugin-jest";
-import cypressPlugin from "eslint-plugin-cypress";
+import jest from "eslint-plugin-jest";
+import cypress from "eslint-plugin-cypress";
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
+  pluginJs.configs.recommended,
   {
-    languageOptions: {
-      globals: globals.browser // Base browser environment
-    },
-    ...pluginJs.configs.recommended // Base ESLint recommended rules
-  },
-  // Jest configuration for unit tests
-  {
-    files: ["**/*.test.js"],  // Applies to Jest test files (e.g., baseline.test.js)
+    files: ["**/*.test.js", "**/*.spec.js"],
     languageOptions: {
       globals: {
-        ...Object.fromEntries(
-          Object.keys(globals.node).map(key => [key, "readonly"])
-        ), // Node globals set as readonly
-        ...Object.fromEntries(
-          Object.keys(jestPlugin.environments.globals).map(key => [key, "readonly"])
-        ) // Jest globals (like `test`, `expect`)
-      }
+        ...Object.fromEntries(Object.keys(globals.browser).map(key => [key, "readonly"])),
+        ...Object.fromEntries(Object.keys(globals.node).map(key => [key, "readonly"])),
+        ...Object.fromEntries(Object.keys(jest.environments.globals).map(key => [key, "readonly"])),
+      },
     },
     plugins: {
-      jest: jestPlugin
+      jest,
     },
     rules: {
-      ...jestPlugin.configs.recommended.rules, // Jest recommended rules
-      "jest/prefer-expect-assertions": "off"
-    }
+      ...jest.configs.recommended.rules,
+    },
   },
-  // Cypress configuration for e2e tests
   {
-    files: ["**/*.cy.js"], // Applies to Cypress test files (e.g., example.cy.js)
+    files: ["**/*.cy.js"],
+    plugins: {
+      cypress,
+    },
     languageOptions: {
       globals: {
-        ...Object.fromEntries(
-          Object.keys(globals.browser).map(key => [key, "readonly"])
-        ), // Browser globals set as readonly
-        ...Object.fromEntries(
-          Object.keys(cypressPlugin.environments.globals).map(key => [key, "readonly"])
-        ) // Cypress globals (like `cy`, `Cypress`)
-      }
-    },
-    plugins: {
-      cypress: cypressPlugin
+        ...Object.fromEntries(Object.keys(globals.browser).map(key => [key, "readonly"])),
+        ...Object.fromEntries(Object.keys(globals.node).map(key => [key, "readonly"])),
+        ...Object.fromEntries(Object.keys(cypress.environments.globals).map(key => [key, "readonly"])),
+      },
     },
     rules: {
-      ...cypressPlugin.configs.recommended.rules, // Cypress recommended rules
-      "cypress/no-unnecessary-waiting": "off",
-      "no-unused-vars": "off"
-    }
-  }
+      ...cypress.configs.recommended.rules,
+    },
+  },
+  {
+    files: ["cypress.config.js"],
+    languageOptions: {
+      globals: Object.fromEntries(Object.keys(globals.node).map(key => [key, "readonly"])),
+    },
+    parserOptions: {
+      sourceType: "commonjs",
+    },
+  },
 ];
