@@ -29,11 +29,7 @@ Process:
 12. Submit a link to the Open Pull Request on Moodle.
 
 
-## Installation
-
-### Prerequisites
-- **Node.js** and **npm** installed on your machine.
-- **Git** installed for cloning the repository.
+## Installationgit
 
 ### Instructions
 1. **Clone the repository**:
