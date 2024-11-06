@@ -1,7 +1,8 @@
 // Define and export the wait function
 export function wait(ms = 1000, resolveWith = "Hello World") {
     return new Promise((resolve) => {
-      setTimeout(() => resolve(resolveWith), ms);
+      globalThis.setTimeout(() => resolve(resolveWith), ms); //Added globalThis to ensures that setTimeout is accessed from the global scope, making it available regardless of the environment.
+
     });
   }
   
