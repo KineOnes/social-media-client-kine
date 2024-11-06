@@ -54,7 +54,7 @@ Process:
 - Runs unit tests for the application using Jest.
 
 3. Run End-to-End Tests with Cypress:
-    npm run test-e2e
+    npm run test-e2e (npx cypress open )
 - Opens Cypress for end-to-end testing.
 
 # Development Workflows
