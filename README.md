@@ -1,6 +1,8 @@
 # Project Name
 Workflow 
 
+[![Deploy static content to Pages](https://github.com/KineOnes/social-media-client-kine/actions/workflows/pages.yml/badge.svg)](https://github.com/KineOnes/social-media-client-kine/actions/workflows/pages.yml)
+
 ## Description
 Brief from lms.noroff.no: 
 Brief: Although Quality Assurance is a practice we should be concerned with throughout the development cycle, it is common to sprint towards an MVP version of an application before later improving the quality. In this exercise you are tasked with improving the quality of an existing application by providing various development workflows as well as a testing strategy.

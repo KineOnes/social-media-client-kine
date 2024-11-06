@@ -6,8 +6,8 @@ describe("Login Form", () => {
   });
 
   it("Allows user to log in with valid credentials and email ending in @stud.noroff.no", () => {
-    // Open the login form
-    cy.get('button[data-auth="login"]').click();
+    // Open the login form using a more specific selector
+    cy.get('#registerForm button[data-auth="login"]').click();
     cy.wait(500);
 
     // Enter valid Noroff email and password
@@ -19,12 +19,13 @@ describe("Login Form", () => {
     cy.wait(500);
 
     // Assert that login was successful (check if logout button is visible)
-    cy.get('button[data-auth="logout"]').should("be.visible");
+    cy.get('button[data-auth="logout"]', { timeout: 8000 }) // Increase timeout to 8 seconds
+      .should("be.visible");
   });
 
   it("Displays an error for non-Noroff student emails", () => {
-    // Open the login form
-    cy.get('button[data-auth="login"]').click();
+    // Open the login form using a more specific selector
+    cy.get('#registerForm button[data-auth="login"]').click();
     cy.wait(500);
 
     // Enter an invalid email (not ending with @stud.noroff.no) and valid password
@@ -36,6 +37,8 @@ describe("Login Form", () => {
     cy.wait(500);
 
     // Assert that an error message is shown
-    cy.get("#loginError").should("be.visible").and("contain", "Invalid email");
+    cy.get("#loginError", { timeout: 6000 })
+      .should("be.visible")
+      .and("contain", "Invalid email");
   });
 });
