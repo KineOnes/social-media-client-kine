@@ -38,6 +38,6 @@ describe("Login Form", () => {
     // Assert that an error message is shown
     cy.get("#loginEmail")
       .invoke("prop", "validationMessage")
-      .should("contain", "Please match the requested format");
+      .should("contain", "Only Noroff student or teacher emails are valid");
   });
 });
