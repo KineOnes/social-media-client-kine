@@ -11,15 +11,15 @@ describe("Login Form", () => {
     cy.wait(500);
 
     // Enter valid Noroff email and password
-    cy.get("#loginEmail").type("validuser@stud.noroff.no");
-    cy.get("#loginPassword").type("ValidPassword123");
+    cy.get("#loginEmail").type("blobby@stud.noroff.no");
+    cy.get("#loginPassword").type("11111111");
 
     // Submit the form
     cy.get("#loginForm").submit();
     cy.wait(500);
 
     // Assert that login was successful (check if logout button is visible)
-    cy.get('button[data-auth="logout"]', { timeout: 8000 }) // Increase timeout to 8 seconds
+    cy.get('button[data-auth="logout"]') // Increase timeout to 8 seconds
       .should("be.visible");
   });
 
@@ -34,11 +34,10 @@ describe("Login Form", () => {
 
     // Submit the form
     cy.get("#loginForm").submit();
-    cy.wait(500);
 
     // Assert that an error message is shown
-    cy.get("#loginError", { timeout: 6000 })
-      .should("be.visible")
-      .and("contain", "Invalid email");
+    cy.get("#loginEmail")
+      .invoke("prop", "validationMessage")
+      .should("contain", "Please match the requested format");
   });
 });
