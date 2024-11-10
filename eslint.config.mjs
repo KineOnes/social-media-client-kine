@@ -1,30 +1,21 @@
-import globals from "globals";
+//import globals from "globals";
 import pluginJs from "@eslint/js";
-import jest from "eslint-plugin-jest";
-import cypress from "eslint-plugin-cypress";
+import pluginJest from "eslint-plugin-jest";
+import pluginCypress from "eslint-plugin-cypress/flat";
 
 export default [
   pluginJs.configs.recommended,
   {
     files: ["**/*.test.js", "**/*.spec.js"],
     languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-        ...jest.environments.globals,
-      },
+      globals: pluginJest.environments.globals.globals,
     },
   },
+  pluginCypress.configs.recommended,
   {
-    files: ["**/*.cy.js"],
-    plugins: [cypress],
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-        ...cypress.environments.globals,
-      },
-    },
+    rules: {
+      'cypress/no-unnecessary-waiting': 'off'
+    }
   },
   {
     files: ["cypress.config.js"],
